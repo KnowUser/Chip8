@@ -18,6 +18,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Chip8.cpp" />
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chip8.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4B94AB4D-BEC7-4D59-8C1D-8088408E4BC6}</ProjectGuid>
@@ -119,13 +126,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="F:\OpenGL\OpenGL\Chip8.cpp" />
-    <ClCompile Include="F:\OpenGL\OpenGL\Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="F:\OpenGL\OpenGL\Chip8.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
