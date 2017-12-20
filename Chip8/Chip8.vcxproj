@@ -76,10 +76,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Matheus\Downloads\opengl\glew-1.11.0\include;C:\Users\Matheus\Downloads\opengl\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Matheus\Documents\Visual Studio 2017\Projects\Chip8\Bibliotecas Adicionais\opengl\glew-1.11.0\include;C:\Users\Matheus\Downloads\opengl\glew-1.11.0\include;C:\Users\Matheus\Documents\Visual Studio 2017\Projects\Chip8\Bibliotecas Adicionais\opengl\freeglut\include;C:\Users\Matheus\Downloads\opengl\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Matheus\Downloads\opengl\glew-1.11.0\lib;C:\Users\Matheus\Downloads\opengl\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Matheus\Documents\Visual Studio 2017\Projects\Chip8\Bibliotecas Adicionais\opengl\freeglut\lib;C:\Users\Matheus\Documents\Visual Studio 2017\Projects\Chip8\Bibliotecas Adicionais\opengl\glew-1.11.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
