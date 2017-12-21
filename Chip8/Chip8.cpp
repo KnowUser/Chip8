@@ -84,11 +84,11 @@ void Chip8::emulateCycle()
 		break;
 
 	case 0xB000: //pula para o endereço NNN + V[0]
-		pc = V[0x0] + (opcode & 0x0FFF);
+		pc = (opcode & 0x0FFF) + V[0];
 		break;
 
 	case 0xC000: //V[X] = rand & NN
-		V[opcode & 0x0F00 >> 8] = (rand() % 0xFF) & (opcode & 0x00FF);
+		V[(opcode & 0x0F00) >> 8] = (rand() % 0xFF) & (opcode & 0x00FF);
 		pc += 2;
 		break;
 
@@ -146,7 +146,7 @@ void Chip8::emulateCycle()
 		switch (opcode & 0x00FF) {
 
 		case 0x0007: //	Define VX para o valor do temporizador de atraso
-			V[opcode & 0x0F00 >> 8] = delay_timer;
+			V[(opcode & 0x0F00) >> 8] = delay_timer;
 			pc += 2;
 			break;
 
@@ -167,30 +167,30 @@ void Chip8::emulateCycle()
 				return;
 
 			pc += 2;
-			break;
 		}
+		break;
 
 		case 0x0015: //Define o temporizador de atraso para VX.
-			delay_timer = V[opcode & 0x0F00 >> 8];
+			delay_timer = V[(opcode & 0x0F00) >> 8];
 			pc += 2;
 			break;
 
 		case 0x0018: //Define o temporizador de som para VX.
-			sound_timer = V[opcode & 0x0F00 >> 8];
+			sound_timer = V[(opcode & 0x0F00) >> 8];
 			pc += 2;
 			break;
 
 		case 0x001E:
-			if (I + V[opcode & 0x0F00 >> 8] > 0xFFF)
+			if (I + V[(opcode & 0x0F00) >> 8] > 0xFFF)
 				V[0xF] = 1;
 			else
 				V[0xF] = 0;
-			I += V[opcode & 0x0F00 >> 8];
+			I += V[(opcode & 0x0F00) >> 8];
 			pc += 2;
 			break;
 
 		case 0x0029:
-			I = V[opcode & 0x0F00 >> 8] * 0x5;
+			I = V[(opcode & 0x0F00) >> 8] * 0x5;
 			pc += 2;
 			break;
 
@@ -265,7 +265,7 @@ void Chip8::emulateCycle()
 		break;
 
 	case 0x4000:
-		if (V[(opcode & 0x0F00) >> 8] != opcode & 0x00FF)
+		if (V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF))
 			pc += 4;
 		else
 			pc = pc + 2;
@@ -298,17 +298,17 @@ void Chip8::emulateCycle()
 			break;
 
 		case 0x0001: //V[x] = V[x] | V[y]
-			V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] | V[(opcode & 0x00F0) >> 4];
+			V[(opcode & 0x0F00) >> 8] |= V[(opcode & 0x00F0) >> 4];
 			pc += 2;
 			break;
 
 		case 0x0002: //V[x] = V[x] & V[y]
-			V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] & V[(opcode & 0x00F0) >> 4];
+			V[(opcode & 0x0F00) >> 8] &= V[(opcode & 0x00F0) >> 4];
 			pc += 2;
 			break;
 
 		case 0x0003: //V[x] = V[x] ^ V[y]
-			V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] ^ V[(opcode & 0x00F0) >> 4];
+			V[(opcode & 0x0F00) >> 8] ^= V[(opcode & 0x00F0) >> 4];
 			pc += 2;
 			break;
 			//8XY4
@@ -322,11 +322,11 @@ void Chip8::emulateCycle()
 			break;
 
 		case 0x0005: //V[x] = V[x] - V[y] carry = 0 emprestimo, 1 qnd nao
-			if (V[opcode & 0x00F0 >> 4] > V[opcode & 0x0F00 >> 8])
+			if (V[(opcode & 0x00F0) >> 4] > V[(opcode & 0x0F00) >> 8])
 				V[0xF] = 0;
 			else
 				V[0xF] = 1;
-			V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] - V[(opcode & 0x00F0) >> 4];
+			V[(opcode & 0x0F0) >> 8] -= V[(opcode & 0x00F0) >> 4];
 			pc += 2;
 			break;
 
@@ -341,7 +341,7 @@ void Chip8::emulateCycle()
 				V[0xF] = 0; // there is a borrow
 			else
 				V[0xF] = 1;
-			V[(opcode & 0x0F00 >> 8)] = V[(opcode & 0x00F0 >> 4)] - V[(opcode & 0x0F00 >> 8)];
+			V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8];
 			pc += 2;
 			break;
 
@@ -358,7 +358,7 @@ void Chip8::emulateCycle()
 		break;
 
 	case 0x9000:
-		if (V[(opcode & 0x0F00 >> 8)] != V[(opcode & 0x00F0 >> 4)])
+		if (V[(opcode & 0x0F00) >> 8] != V[(opcode & 0x00F0) >> 4])
 			pc += 4;
 		else
 			pc += 2;
@@ -405,7 +405,7 @@ bool Chip8::loadApplication(const char * filename)
 
 	FILE * pFile;
 	if (filename == NULL)
-		pFile = fopen("invaders", "rb"); //tetris.c8
+		pFile = fopen("pong2", "rb"); //tetris.c8
 	else
 		pFile = fopen(filename, "rb");
 
