@@ -145,7 +145,7 @@ void Chip8::emulateCycle()
 
 		switch (opcode & 0x00FF) {
 
-		case 0x0007: //	Define VX para o valor do temporizador de atraso
+		case 0x0007: //	Define VX para o valor do temporizador de atraso..
 			V[(opcode & 0x0F00) >> 8] = delay_timer;
 			pc += 2;
 			break;
